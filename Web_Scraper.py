@@ -1,11 +1,19 @@
-# Thomas Dill
+# Group 4 
 # CS483: Web Data
-# Assignment 1
+# Final Project
+# Scrapes wikipedia for the list of exoplanets
+# and builds a database from the information 
 
+import gzip
+import io
 import csv
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 
 def formatWikiURL( name):
     terms = name.split(' ')
@@ -14,6 +22,19 @@ def formatWikiURL( name):
     URL = URL.replace(" " , "_")
     URL = URL.replace("+" , "%2B")
     return URL
+
+def returnWikiText(wiki):
+    try:
+        header = {'User-Agent': 'Mozilla/5.0'}
+        req = urllib2.Request(wiki, headers=header)
+        page = urllib2.urlopen(req)
+        soup = BeautifulSoup(page, 'html.parser')
+        result = soup.find('div',id="bodyContent").text
+        result = result.replace(",", " ")
+        return result
+    except:
+        return " "
+    
 
 
 def main():
@@ -34,9 +55,9 @@ def main():
 
 
     # Write the data to a CSV file
-    exo.to_csv("exo.csv", mode='a', header = False, index = False, encoding = 'utf-8')
+    exo.to_csv("exo.csv", mode='w', header = False, index = False, encoding = 'utf-8')
 
-    
+    i = 0
     with open('exo.csv','r') as f_in:
         with open('exo_plusURl.csv', 'w') as f_out:
             writer = csv.writer(f_out, delimiter=',', lineterminator='\n')
@@ -46,19 +67,32 @@ def main():
             # read headers
             row = next(reader)
             # add new header to list of headers
-            row.append('12')
-            row = next(reader)
             row.append('URL')
+            row.append('wikiText')
             result.append(row)
 
-           
+            writer.writerows(result)
+            
 
             for row in reader:
+                result = []
                 # add new column values
                 row.append(formatWikiURL( row[0] ))
+                row.append(returnWikiText(row[12]))
                 result.append(row)
 
-            writer.writerows(result)
+                i += 1
+                print (i)
+                if ( i <= 10):
+                    print(row[13])
+                if ( i > 100):  #remove this and run again 
+                    break       #remove this too
+
+
+                writer.writerows(result)
+
+
+            
 
 
 
