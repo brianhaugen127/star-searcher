@@ -59,7 +59,7 @@ def main():
 
     i = 0
     with open('exo.csv','r') as f_in:
-        with open('exo_plusURl.csv', 'w') as f_out:
+        with open('exoUpdated.csv', 'w') as f_out:
             writer = csv.writer(f_out, delimiter=',', lineterminator='\n')
             reader = csv.reader(f_in, delimiter=',')
 
