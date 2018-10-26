@@ -40,12 +40,9 @@ def myInt(number):
 
 def index():
     
-    # Check if directory exists, otherwise create the directory. 
-    path = "myIndex"
-    if os.path.exists(path):
-        pass
-    else:
-        os.mkdir(path)
+    #if directory doesn't exist, create myIndex
+    if not os.path.exists("myIndex"):
+        os.mkdir("myIndex")
 
     # Create the schema, indexer, and the writer 
     schema = Schema(Name=TEXT(stored=True), Mass=NUMERIC(float, stored=True), Radius=NUMERIC(float, stored=True), Period=NUMERIC(float, stored=True),
