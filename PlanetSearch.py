@@ -18,7 +18,7 @@ def search(indexer, searchTerm):
         query = MultifieldParser(
             ['Remarks', 'wikiText'], schema=indexer.schema)
         query = query.parse(searchTerm)
-        results = searcher.search(query, limit=None)
+        results = searcher.search(query, limit=20)
         print("Length of results: " + str(len(results)))
         for line in results:
             print(line['Name'], line['URL'], line['Distance'])
@@ -43,8 +43,9 @@ def index():
     # Check if directory exists, otherwise create the directory. 
     path = "myIndex"
     if os.path.exists(path):
-        return open_dir(path)
-    os.mkdir(path)
+        open_dir(path)
+    else:
+        os.mkdir(path)
 
     # Create the schema, indexer, and the writer 
     schema = Schema(Name=TEXT(stored=True), Mass=NUMERIC(float, stored=True), Radius=NUMERIC(float, stored=True), Period=NUMERIC(float, stored=True),
@@ -54,7 +55,8 @@ def index():
     usages_exists = whoosh.index.exists_in("indexdir", indexname="planetIndex")
     if (usages_exists):
         print("Index already Exists")
-        return
+        return whoosh.index.open_dir("myIndex", indexname="planetIndex", readonly=False)
+
 
     indexer = create_in('myIndex', schema , indexname="planetIndex")
     writer = indexer.writer()
