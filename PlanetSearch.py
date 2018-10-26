@@ -3,15 +3,11 @@ import sys
 from builtins import input
 csv.field_size_limit(sys.maxsize)
 import whoosh
+import os.path
 
-import csv
-import sys
-from builtins import input
-
-import whoosh
+from os import path
 from whoosh import index
-from whoosh.index import create_in
-from whoosh.index import open_dir
+from whoosh.index import create_in, open_dir
 from whoosh.fields import *
 from whoosh.qparser import QueryParser
 from whoosh.qparser import MultifieldParser
@@ -43,6 +39,14 @@ def myInt(number):
         return "0"
 
 def index():
+    
+    # Check if directory exists, otherwise create the directory. 
+    path = "myIndex"
+    if os.path.exists(path):
+        return open_dir(path)
+    os.mkdir(path)
+
+    # Create the schema, indexer, and the writer 
     schema = Schema(Name=TEXT(stored=True), Mass=NUMERIC(float, stored=True), Radius=NUMERIC(float, stored=True), Period=NUMERIC(float, stored=True),
         Semi_major_axis=NUMERIC(float, stored=True), Temperature=NUMERIC(stored=True), Discovery_Method=TEXT(stored=True), Discovery_Year=NUMERIC(stored=True),
         Distance=NUMERIC(float, stored=True), hostStarMass=NUMERIC(float, stored=True), hostStarTemp=NUMERIC(float, stored=True) , Remarks=TEXT(stored=True), URL=TEXT(stored=True) , wikiText=TEXT(stored=True) )
@@ -55,9 +59,12 @@ def index():
     indexer = create_in('myIndex', schema , indexname="planetIndex")
     writer = indexer.writer()
 
+    # open the exoplanet csv file from the web scraper. Note: Must be in the same directory!
     csvfile = open('exoUpdated.csv', 'r')
     reader = csv.reader(csvfile, delimiter=',')
     line_count = 0
+
+    # Read each row of the CSV file and write into myIndex Whoosh index
     for row in reader:
         line_count += 1
         if (line_count == 1):
@@ -88,6 +95,8 @@ def main():
     print('Search for planets')
     while (True):
         print('\n')
+        print('To exit the program, just type "exit". \n')
+        
         searchTerm = input('Please enter a query: ')
         if searchTerm == 'exit':
             break
