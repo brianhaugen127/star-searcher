@@ -43,7 +43,7 @@ def index():
     # Check if directory exists, otherwise create the directory. 
     path = "myIndex"
     if os.path.exists(path):
-        open_dir(path)
+        pass
     else:
         os.mkdir(path)
 
