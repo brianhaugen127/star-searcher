@@ -31,6 +31,7 @@ def returnWikiText(wiki):
         soup = BeautifulSoup(page, 'html.parser')
         result = soup.find('div',id="bodyContent").text
         result = result.replace(",", " ")
+        result = result.replace("\n", " ")
         return result
     except:
         return " "
