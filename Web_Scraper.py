@@ -75,7 +75,7 @@ def main():
             
 
             for row in reader:
-                result = []
+                
                 # add new column values
                 row.append(formatWikiURL( row[0] ))
                 row.append(returnWikiText(row[12]))
@@ -83,13 +83,9 @@ def main():
 
                 i += 1
                 print (i)
-                if ( i <= 10):
-                    print(row[13])
-                if ( i > 100):  #remove this and run again 
-                    break       #remove this too
-
 
                 writer.writerows(result)
+                result = []
 
 
             
