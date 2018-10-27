@@ -32,12 +32,16 @@ def returnWikiText(wiki):
         result = soup.find('div',id="bodyContent").text
         result = result.replace(",", " ")
         result = result.replace("\n", " ")
+<<<<<<< HEAD
 
         try:
             image =  soup.find('meta', property="og:image" ).get("content") 
             return (result, image)
         except:
             return (result, " ")
+=======
+        return result
+>>>>>>> 7e73357c9962fcc0e53b4328f8d8c83c0aa4c08e
     except:
         print("There was an error")
         return (" " , " ")
