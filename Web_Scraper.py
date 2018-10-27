@@ -4,7 +4,6 @@
 # Scrapes wikipedia for the list of exoplanets
 # and builds a database from the information 
 
-import gzip
 import io
 import csv
 import requests
@@ -14,6 +13,7 @@ try:
     import urllib.request as urllib2
 except ImportError:
     import urllib2
+
 
 def formatWikiURL( name):
     terms = name.split(' ')
@@ -31,9 +31,16 @@ def returnWikiText(wiki):
         soup = BeautifulSoup(page, 'html.parser')
         result = soup.find('div',id="bodyContent").text
         result = result.replace(",", " ")
-        return result
+        result = result.replace("\n", " ")
+
+        try:
+            image =  soup.find('meta', property="og:image" ).get("content") 
+            return (result, image)
+        except:
+            return (result, " ")
     except:
-        return " "
+        print("There was an error")
+        return (" " , " ")
     
 
 
@@ -69,16 +76,16 @@ def main():
             # add new header to list of headers
             row.append('URL')
             row.append('wikiText')
+            row.append('imageURL')
             result.append(row)
-
-            writer.writerows(result)
-            
 
             for row in reader:
                 
                 # add new column values
                 row.append(formatWikiURL( row[0] ))
-                row.append(returnWikiText(row[12]))
+                wikiResult = returnWikiText(row[12])
+                row.append( wikiResult[0])  #append wikiText
+                row.append( wikiResult[1])  #append wiki Image URL
                 result.append(row)
 
                 i += 1
@@ -86,6 +93,7 @@ def main():
 
                 writer.writerows(result)
                 result = []
+
 
 
             
