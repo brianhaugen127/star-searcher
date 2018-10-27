@@ -21,7 +21,7 @@ def search(indexer, searchTerm):
         results = searcher.search(query, limit=20)
         print("Length of results: " + str(len(results)))
         for line in results:
-            print(line['Name'], line['URL'], line['Distance'])
+            print(line['Name'], line['URL'], line['Distance'] , line['Remarks'])
             #print (line)
 
 def myfloat(number):
@@ -52,7 +52,7 @@ def index():
         Semi_major_axis=NUMERIC(float, stored=True), Temperature=NUMERIC(stored=True), Discovery_Method=TEXT(stored=True), Discovery_Year=NUMERIC(stored=True),
         Distance=NUMERIC(float, stored=True), hostStarMass=NUMERIC(float, stored=True), hostStarTemp=NUMERIC(float, stored=True) , Remarks=TEXT(stored=True), URL=TEXT(stored=True) , wikiText=TEXT(stored=True) )
     
-    usages_exists = whoosh.index.exists_in("indexdir", indexname="planetIndex")
+    usages_exists = whoosh.index.exists_in("myIndex", indexname="planetIndex")
     if (usages_exists):
         print("Index already Exists")
         return whoosh.index.open_dir("myIndex", indexname="planetIndex", readonly=False)

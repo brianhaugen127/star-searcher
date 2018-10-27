@@ -34,7 +34,11 @@ def returnWikiText(wiki):
         result = result.replace("\n", " ")
 
         try:
-            image =  soup.find('meta', property="og:image" ).get("content") 
+            image =  soup.find('meta', property="og:image" ).get("content")
+            image = image.replace("\n", "")
+            image = image.replace(",", "")
+
+
             return (result, image)
         except:
             return (result, " ")
