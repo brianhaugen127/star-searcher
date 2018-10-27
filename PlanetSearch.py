@@ -26,6 +26,9 @@ def search(indexer, searchTerm):
 
 def myfloat(number):
     try:
+        if u"\u00B1" in number:
+            list1 = number.split()
+            number = list1[0]
         result = float(number)
         return result
     except:
