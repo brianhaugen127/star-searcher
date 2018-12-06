@@ -23,6 +23,20 @@ def search(indexer, searchTerm):
         for line in results:
             print(line['Name'], line['URL'], line['Distance'] , line['Remarks'])
             #print (line)
+        
+        rname = list()
+        rUrl = list()
+        rDist = list()
+        rRem = list()
+        
+        for x in results:
+            rname.append(x['Name'])
+            rUrl.append(x['URL'])
+            rDist.append(x['Distance'])
+            rRem.append(x['Remarks'])
+
+        return rname, rUrl, rDist, rRem
+
 
 def myfloat(number):
     try:

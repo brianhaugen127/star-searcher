@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href= "{{ url_for('static',filename='styles/main.css') }}">
+		<title>Results</title>
+	</head>
+
+	<body>
+
+		<h2>
+			<div id='redText'>You</div> <div class='blueText'>searched</div> for: {{query}}
+		</h2>
+		
+		<table>
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>URL</th>
+					<th>Distance</th>
+					<th>Remarks</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for t, d, s, e in results %}
+				<tr>
+					<td>{{t}}</td>
+					<td>{{d}}</td>
+					<td>{{s}}</td>
+					<td>{{e}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<form method="post" action="{{ url_for('myindex') }}">
+			<input type="submit" value="Return" />
+		</form>	
+	</body>	
+</html>
