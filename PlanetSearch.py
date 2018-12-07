@@ -107,18 +107,18 @@ def index():
 
 
 def main():
-    indexer = index()
-    print('Search for planets')
-    while (True):
-        print('\n')
-        print('To exit the program, just type "exit". \n')
+   # indexer = index()
+   # print('Search for planets')
+   # while (True):
+   #     print('\n')
+   #     print('To exit the program, just type "exit". \n')
         
-        searchTerm = input('Please enter a query: ')
-        if searchTerm == 'exit':
-            break
+   #     searchTerm = input('Please enter a query: ')
+    #    if searchTerm == 'exit':
+     #       break
         
-        results = search(indexer, searchTerm)
+      #  results = search(indexer, searchTerm)
 
 
-if __name__ == '__main__':
-    main()
+    if __name__ == '__main__':
+        main()
