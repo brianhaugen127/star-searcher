@@ -1,2 +1,2 @@
-# star-searcher
-Search engine for stars and other astral bodies
+# planet-searcher
+Search engine for planets and other astral bodies
