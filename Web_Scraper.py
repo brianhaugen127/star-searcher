@@ -43,7 +43,7 @@ def returnWikiText(wiki):
         except:
             return (result, " ")
     except:
-        print("There was an error")
+        print("There is no image and/or remarks")
         return (" " , " ")
     
 

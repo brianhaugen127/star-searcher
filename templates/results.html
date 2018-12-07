@@ -9,7 +9,7 @@
 	<body>
 
 		<h2>
-			<div id='redText'>You</div> <div class='blueText'>searched</div> for: {{query}}
+			<div id='redText'>You searched for: </div> <P style="color:white">{{query}}<p>
 		</h2>
 		
 		<table>
@@ -25,7 +25,7 @@
 				{% for t, d, s, e in results %}
 				<tr>
 					<td>{{t}}</td>
-					<td>{{d}}</td>
+          <td><a href="{{d}}">{{d}}</a></td>
 					<td>{{s}}</td>
 					<td>{{e}}</td>
 				</tr>
