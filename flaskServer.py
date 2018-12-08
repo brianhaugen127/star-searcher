@@ -37,11 +37,11 @@ def results():
 	#print('Test Query is: ' + test)
 
     #Get the results from the search in whooshtest.py 
-	name, url, dist, remarks = search(index(), keywordquery)
+	name, url, dist, remarks, imageURL = search(index(), keywordquery)
 	print(remarks)
     
     #Render the results to myresults
-	return render_template('results.html', query=keywordquery, results=zip(name, url, dist, remarks))
+	return render_template('results.html', query=keywordquery, results=zip(name, url, dist, remarks, imageURL))
 
 
 if __name__ == '__main__':
