@@ -1,3 +1,5 @@
+# This code builds the Flask Server and ties the front end
+# of the project to the back end.
 
 from flask import Flask, render_template, url_for, request
 import whoosh
@@ -12,9 +14,10 @@ from PlanetSearch import index
 
 app = Flask(__name__)
 
+# These functions are used in trouble shooting
 @app.route('/', methods=['GET', 'POST'])
 def myindex():
-	print('HEya')
+	print('Hello')
 	return render_template('welcome_page.html')
 
 @app.route('/my-link/')
@@ -31,16 +34,16 @@ def results():
 		data = request.args
 
 	keywordquery = data.get('searchterm')
-	#test = data.get('test')
+	# test = data.get('test')
 
 	print('Keyword Query is: ' + keywordquery)
-	#print('Test Query is: ' + test)
+	# print('Test Query is: ' + test)
 
-    #Get the results from the search in whooshtest.py 
+    # Get the results from the search in whooshtest.py
 	name, url, dist, remarks, imageURL = search(index(), keywordquery)
 	print(remarks)
     
-    #Render the results to myresults
+    # Render the results to myresults
 	return render_template('results.html', query=keywordquery, results=zip(name, url, dist, remarks, imageURL))
 
 

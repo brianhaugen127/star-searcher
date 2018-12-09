@@ -1,4 +1,4 @@
-# Group 4 
+# Team ExoTerra
 # CS483: Web Data
 # Final Project
 # Scrapes wikipedia for the list of exoplanets

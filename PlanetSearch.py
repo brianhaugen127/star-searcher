@@ -1,3 +1,10 @@
+# This is the Planet Searcher python code that builds
+# the schema, and indexes the data using Whoosh.
+# Basiaclly, this builds the database and back end
+# of the project.
+
+
+# Importing libraries and whoosh into the project
 import csv
 import sys
 from builtins import input
@@ -12,7 +19,9 @@ from whoosh.fields import *
 from whoosh.qparser import QueryParser
 from whoosh.qparser import MultifieldParser
 
-
+# This is a function that is used at the CMD line
+# to add in trouble shooting and seting up the
+# database.
 def search(indexer, searchTerm):
     with indexer.searcher() as searcher:
         query = MultifieldParser(
@@ -22,8 +31,9 @@ def search(indexer, searchTerm):
         print("Length of results: " + str(len(results)))
         for line in results:
             print(line['Name'], line['URL'], line['Distance'] , line['Remarks'], line['imageURL'])
-            #print (line)
-        
+            print (line)
+
+  # This is setting up the database by creating a list of results
         rname = list()
         rUrl = list()
         rDist = list()
@@ -36,13 +46,14 @@ def search(indexer, searchTerm):
             rDist.append(x['Distance'])
             rRem.append(x['Remarks'])
 
+# This is the stock image we use if an exoplanet does not have an image.
             if x['imageURL'] == ' ':
                 rImage.append("https://assets3.thrillist.com/v1/image/2778565/size/sk-2017_04_article_main_mobile.jpg")
             else:
                 rImage.append(x['imageURL'])
         return rname, rUrl, rDist, rRem, rImage
 
-
+# The following functions return 0 to the database for error checks
 def myfloat(number):
     try:
         if u"\u00B1" in number:
@@ -60,6 +71,7 @@ def myInt(number):
     except:
         return "0"
 
+# This creates the search index for Whoosh
 def index():
     
     #if directory doesn't exist, create myIndex
@@ -111,7 +123,13 @@ def index():
     writer.commit()
     return indexer
 
-#
+# The following commented code was used prior to the Flask server
+# being implemented. It allowed the app to run at the cmd line
+# and was used for trouble shooting. Feel free to uncomment the code
+# to run the application at the cmd line. In this case, you will still
+# need to run Web_Scraper.py first to create the data to pull from,
+# then type $ python PlanetSearch.py. When finished, simply type exit.
+
 # def main():
     # indexer = index()
     # print('Search for planets')
