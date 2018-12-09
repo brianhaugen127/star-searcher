@@ -1,0 +1,61 @@
+html {
+    background: #e6e9e9;
+    background-image: linear-gradient(270deg, rgb(230, 233, 233) 5%, rgb(216, 221, 221) 95%);
+    -webkit-font-smoothing: antialiased;
+
+}
+
+body {
+
+    background-image: url("Starbackground.jpg");
+  width: 1920px;
+  height: 1279px;
+  backgrouns-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0);
+    color: #545454;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    line-height: 1.5;
+    max-width: 100%;
+    padding: 20px 10px 10px 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #222;
+    font-weight: 600;
+    line-height: 2.0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th {
+    text-align: left;
+    height: 100px;
+    background: #93ded0;
+    color: #ff9068;
+}
+
+td {
+    text-align: left;
+    background: #5c5590;
+    color: #8effb1;
+    height: 50px;
+}
+
+.blueText{
+    color: #000afd;
+    display: inline;
+}
+
+#redText{
+    color: #fd0000;
+    display: inline;
+}
