@@ -16,18 +16,19 @@ from whoosh.qparser import MultifieldParser
 def search(indexer, searchTerm):
     with indexer.searcher() as searcher:
         query = MultifieldParser(
-            ['Remarks', 'wikiText'], schema=indexer.schema)
+            ['Remarks', 'wikiText' ], schema=indexer.schema)
         query = query.parse(searchTerm)
         results = searcher.search(query, limit=20)
         print("Length of results: " + str(len(results)))
         for line in results:
-            print(line['Name'], line['URL'], line['Distance'] , line['Remarks'])
+            print(line['Name'], line['URL'], line['Distance'] , line['Remarks'], line['imageURL'])
             #print (line)
         
         rname = list()
         rUrl = list()
         rDist = list()
         rRem = list()
+        rImage = list()
         
         for x in results:
             rname.append(x['Name'])
@@ -35,7 +36,11 @@ def search(indexer, searchTerm):
             rDist.append(x['Distance'])
             rRem.append(x['Remarks'])
 
-        return rname, rUrl, rDist, rRem
+            if x['imageURL'] == ' ':
+                rImage.append("https://assets3.thrillist.com/v1/image/2778565/size/sk-2017_04_article_main_mobile.jpg")
+            else:
+                rImage.append(x['imageURL'])
+        return rname, rUrl, rDist, rRem, rImage
 
 
 def myfloat(number):
@@ -64,7 +69,7 @@ def index():
     # Create the schema, indexer, and the writer 
     schema = Schema(Name=TEXT(stored=True), Mass=NUMERIC(float, stored=True), Radius=NUMERIC(float, stored=True), Period=NUMERIC(float, stored=True),
         Semi_major_axis=NUMERIC(float, stored=True), Temperature=NUMERIC(stored=True), Discovery_Method=TEXT(stored=True), Discovery_Year=NUMERIC(stored=True),
-        Distance=NUMERIC(float, stored=True), hostStarMass=NUMERIC(float, stored=True), hostStarTemp=NUMERIC(float, stored=True) , Remarks=TEXT(stored=True), URL=TEXT(stored=True) , wikiText=TEXT(stored=True) )
+        Distance=NUMERIC(float, stored=True), hostStarMass=NUMERIC(float, stored=True), hostStarTemp=NUMERIC(float, stored=True) , Remarks=TEXT(stored=True), URL=TEXT(stored=True) , wikiText=TEXT(stored=True), imageURL=TEXT(stored=True))
     
     usages_exists = whoosh.index.exists_in("myIndex", indexname="planetIndex")
     if (usages_exists):
@@ -97,28 +102,29 @@ def index():
         hostStarMass=myfloat(row[9]), 
         hostStarTemp=myfloat(row[10]), 
         Remarks=row[11], 
-        URL=row[12], 
-        wikiText=row[13]  )
+        URL=row[12],
+        wikiText=row[13],
+        imageURL=row[14])
         
 
     print("Total Tuples:",   line_count)
     writer.commit()
     return indexer
 
+#
+# def main():
+    # indexer = index()
+    # print('Search for planets')
+    # while (True):
+    #    print('\n')
+    #    print('To exit the program, just type "exit". \n')
+    #
+    #    searchTerm = input('Please enter a query: ')
+    #    if searchTerm == 'exit':
+    #        break
+    #
+    #    results = search(indexer, searchTerm)
 
-def main():
-    indexer = index()
-    print('Search for planets')
-    while (True):
-        print('\n')
-        print('To exit the program, just type "exit". \n')
-        
-        searchTerm = input('Please enter a query: ')
-        if searchTerm == 'exit':
-            break
-        
-        results = search(indexer, searchTerm)
-
-
-if __name__ == '__main__':
-    main()
+    #
+    # if __name__ == '__main__':
+    #     main()
